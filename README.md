@@ -10,14 +10,19 @@
 * 情感分类：处理文本通常是偏口语化的评论，粒度包括词语级、属性级、句子级和篇章级，类别个数通常较少（褒/贬/中性，喜/怒/悲/恐/惊）
 * 意图识别/分类：聊天机器人场景下核心处理模块
 
+### 数据集
 我们将在如下几个数据集上，详细对比多种不同的传统机器学习和深度学习解决方案，如 LR，MaxEnt，FastText，TextCNN，TextRNN，Attention Model，等等，希望可以找到普适最优的算法模型或技术思路。
 
 * 淘宝电商商品分类：https://tianchi.aliyun.com/datalab/dataSet.htm?spm=5176.100073.888.25.4830d926tXuyxj&id=18 ，阿里巴巴在天池平台上开放的一个商品和类目的数据集，涵盖了 1500w 左右淘宝行业商品库，类目数将近 2,000 个，字段说明如下：
     item_id：商品数字化 id 描述；
     word_seg：商品标题描述的分词；
     cate_id：商品叶子类目 id；
-* 路透社 Newswire 主题分类（路透社21578）：http://kdd.ics.uci.edu/databases/reuters21578/reuters21578.html ，1987 年在路透社出现的一系列新闻文档，按类别排列。 另见RCV1、RCV2和TRC2 http://trec.nist.gov/data/reuters/reuters.html 。
+* 新闻资讯分类（20 Newsgroups）：http://archive.ics.uci.edu/ml/datasets/Twenty+Newsgroups ，共有 18K+ 篇新闻文章，20 个类别。
 * IMDB 电影评论情感分类：http://ai.stanford.edu/~amaas/data/sentiment/ ，从 imdb.com 网站收集的电影评论，积极或消极的情绪。
+
+### 分类策略
+
+### 评估分析
 
 ## 序列标注
 

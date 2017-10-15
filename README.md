@@ -34,10 +34,10 @@
 ### 数据集
 本项目中，我们将针对如下数据集，主要对比 CRF，Structured Perceptron 和 RNN 三种解决方案。
 
-* 中文分词：XXX
-* 命名实体识别：XXX
+* [中文分词 bakeoff2005](http://sighan.cs.uchicago.edu/bakeoff2005/)：第二届国际汉语分词测评（The Second International Chinese Word Segmentation Bakeoff)发布的国际中文分词数据集，共有四家单位提供的测试语料（Academia Sinica、 City University 、Peking University 、Microsoft Research）, 前两家是繁体中文，后两家是简体中文，在评测提供的资源 icwb2-data 中包含了来自这四家单位的训练集（training）、测试集（testing）, 以及根据各自分词标准而提供的相应测试集的标准答案（icwb2-data/scripts/gold）．在icwb2-data/scripts 目录下含有对分词进行自动评分的 perl 脚本 score。
+* [词性标注 人民日报](http://www.icl.pku.edu.cn/)：对《人民日报》1998 年上半年的纯文本语料进行了词语切分和词性标注，严格按照人民日报的日期、版序、文章顺序编排。文章中每个词语都带有词性标记。目前的标记集里有 26 个基本词类标记（名词n、时间词t、处所词s、方位词f、数词m、量词q、区别词b、代词r、动词v、形容词a、状态词z、副词d、介词p、连词c、助词u、语气词y、叹词e、拟声词o、成语i、习惯用语l、简称j、前接成分h、后接成分k、语素g、非语素字x、标点符号w）外，从语料库应用的角度，增加了专有名词（人名nr、地名ns、机构名称nt、其他专有名词nz），从语言学角度也增加了一些标记，总共使用了 40 多个个标记。
 
-### 分类策略
+### 标注策略
 
 ### 评估分析
 

@@ -1,0 +1,87 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+#
+# author: lifeng wang(ofandywang@gmail.com)
+# 文本分类数据集预处理
+
+import os.path
+import random
+import sys
+
+
+def split(input_file, train_ratio = 0.8):
+    """
+    行格式化为 FastText 文件格式，并随机划分训练集和测试集
+    注意：保证同一个 item 存在 multi-label 情况时，分到同一文件
+    """
+    prefix = os.path.basename(input_file)
+    train_file = prefix + '.train.ft'
+    ftrain = open(train_file, 'w')
+    test_file = prefix + '.test.ft'
+    ftest = open(test_file, 'w')
+    for line in open(input_file, 'r'):
+        items = line.strip().split("\t")
+        if len(items) != 3:
+            print 'format error, line: %s' % items
+        new_line = '__label__%s %s' % (items[-1], items[1])
+        random.seed(items[0])
+        if random.random() < train_ratio:
+            ftrain.write(new_line + '\n')
+        else:
+            ftest.write(new_line + '\n')
+    ftrain.close()
+    ftest.close()
+    return train_file, test_file
+
+def shuffle(input_file):
+    """
+    按行对文件随机打散，避免输出存在一定的规律
+    """
+    items = []
+    for line in open(input_file, 'r'):
+        items.append(line)
+    random.shuffle(items)
+    
+    fout = open(input_file, 'w')
+    for item in items:
+        fout.write(item.strip() + '\n')
+    fout.close()
+
+def dist_stat(input_file):
+    len_dist = {}  # 样本长度统计，即 tokens 数目
+    class_dist = {}  # 行业样本分布
+    multi_label_dist = {}  # 多标签分布
+    
+    for line in open(input_file, 'r'):
+        items = line.strip().split(' ')
+        tokens = len(items) - 1
+        if tokens in len_dist:
+             len_dist[tokens] += 1
+        else:
+             len_dist[tokens] = 1
+        if items[0] in class_dist:
+            class_dist[items[0]] += 1
+        else:
+            class_dist[items[0]] = 1
+    
+    prefix = os.path.basename(input_file)
+    flen_dist = open(prefix + '.len_dist', 'w')
+    for key, value in len_dist.items():
+        flen_dist.write('%s\t%d\n' % (key, value))
+    flen_dist.close()
+    fclass_dist = open(prefix + '.class_dist', 'w')
+    for key, value in class_dist.items():
+        fclass_dist.write('%s\t%d\n' % (key, value))
+    fclass_dist.close()
+    
+
+if __name__ == '__main__':
+    input_file = sys.argv[1]
+    train_file, test_file = split(input_file)
+    shuffle(train_file)
+    shuffle(test_file)
+    dist_stat(train_file)
+    dist_stat(test_file)
+
+    # TODO: 格式化成其他模型需要的文件格式
+

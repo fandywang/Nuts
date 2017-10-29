@@ -17,7 +17,7 @@ from hyperopt import fmin, tpe, hp, STATUS_OK, Trials
 # 当前脚本文件所在目录
 WORKER_ROOT_DIR = os.path.split(os.path.realpath(__file__))[0]
 input_file = ''
-NFOLD = 5
+NFOLD = 3
 
 
 def f1(p, r):
@@ -34,6 +34,7 @@ def exp(params):
         if not os.path.exists(local_dir):
             os.mkdir(local_dir)
         os.chdir(local_dir)
+
         total = 0
         for line in open(input_file, 'r'):
             total += 1
@@ -97,16 +98,25 @@ def exp(params):
             'time': time.clock() - start}
 
 def hyperopt():
+    """best
+       dim = 200
+       loss hs
+       bucket = 10000000
+       epoch 5
+       lr 0.1
+       minCount 3
+       wordNgrams 3
+    """
     space = {
-            'data_sampling_ratio': hp.choice('data_sampling_ratio', [0.2, 0.5, 0.8, 1.0]),
-            'dim' : hp.choice('dim', [10, 50, 100, 200, 300]),
-            'minCount' : hp.choice('minCount', [0, 1, 2, 3, 5]),
-            'wordNgrams' : hp.choice('wordNgrams', [1, 2, 3]),
+            'data_sampling_ratio': hp.choice('data_sampling_ratio', [1.0]),
+            'dim' : hp.choice('dim', [50, 100, 200]),
+            'minCount' : hp.choice('minCount', [1, 2, 5]),
+            'wordNgrams' : hp.choice('wordNgrams', [2, 3]),
             'bucket' : hp.choice('bucket', [5000000, 10000000]),
-            'loss' : hp.choice('loss', ['hs', 'ns', 'softmax']),
-            'lr' : hp.choice('lr', [0.01, 0.05, 0.1, 0.5, 1.0]),
-            'epoch': hp.choice('epoch', [5, 10, 20, 25]),
-            'thread': hp.choice('thread', [4, 8])
+            'loss' : hp.choice('loss', ['hs', 'ns']),   #, 'softmax']),
+            'lr' : hp.choice('lr', [0.1, 0.5, 1.0]),
+            'epoch': hp.choice('epoch', [5, 20]),
+            'thread': hp.choice('thread', [8])
             # 'pretrainedVectors' : hp.choice('pretrainedVectors', [])
     }
     trials = Trials()
